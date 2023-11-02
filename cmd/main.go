@@ -12,12 +12,16 @@ import (
 
 func main() {
 	c, err := config.LoadConfig()
+
 	if err != nil {
-		log.Fatalln("failed at config", err)
+		log.Fatalln("Failed at config", err)
 	}
+
 	r := gin.Default()
+
 	authSvc := *auth.RegisterRoutes(r, &c)
 	product.RegisterRoutes(r, &c, &authSvc)
 	order.RegisterRoutes(r, &c, &authSvc)
+
 	r.Run(c.Port)
 }

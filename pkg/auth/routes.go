@@ -6,14 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (svc *ServiceClient) Register(ctx *gin.Context) {
-	routes.Register(ctx, svc.Client)
-}
-
-func (svc *ServiceClient) Login(ctx *gin.Context) {
-	routes.Login(ctx, svc.Client)
-}
-
 func RegisterRoutes(r *gin.Engine, c *config.Config) *ServiceClient {
 	svc := &ServiceClient{
 		Client: InitServiceClient(c),
@@ -24,4 +16,12 @@ func RegisterRoutes(r *gin.Engine, c *config.Config) *ServiceClient {
 	routes.POST("/login", svc.Login)
 
 	return svc
+}
+
+func (svc *ServiceClient) Register(ctx *gin.Context) {
+	routes.Register(ctx, svc.Client)
+}
+
+func (svc *ServiceClient) Login(ctx *gin.Context) {
+	routes.Login(ctx, svc.Client)
 }

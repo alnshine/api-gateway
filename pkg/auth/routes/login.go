@@ -15,17 +15,21 @@ type LoginRequestBody struct {
 
 func Login(ctx *gin.Context, c pb.AuthServiceClient) {
 	b := LoginRequestBody{}
+
 	if err := ctx.BindJSON(&b); err != nil {
 		ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
+
 	res, err := c.Login(context.Background(), &pb.LoginRequest{
 		Email:    b.Email,
 		Password: b.Password,
 	})
+
 	if err != nil {
 		ctx.AbortWithError(http.StatusBadGateway, err)
 		return
 	}
+
 	ctx.JSON(http.StatusCreated, &res)
 }
